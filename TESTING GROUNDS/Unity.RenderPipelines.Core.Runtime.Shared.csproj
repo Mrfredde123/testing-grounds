@@ -43,7 +43,7 @@
     <UnityVersion>6000.6.7f1</UnityVersion>
   </PropertyGroup>
   <PropertyGroup>
-    <CodeAnalysisRuleSet>D:\Unity shit\TESTING GROUNDS\Library\ImmutablePackage.ruleset</CodeAnalysisRuleSet>
+    <CodeAnalysisRuleSet>D:\Unity shit\testing-grounds\TESTING GROUNDS\Library\ImmutablePackage.ruleset</CodeAnalysisRuleSet>
   </PropertyGroup>
   <ItemGroup>
     <Analyzer Include="D:\VSTUDIO\Common7\IDE\Extensions\Microsoft\Visual Studio Tools for Unity\Analyzers\Microsoft.Unity.Analyzers.dll" />
