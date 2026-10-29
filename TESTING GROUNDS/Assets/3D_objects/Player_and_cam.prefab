@@ -719,6 +719,7 @@ GameObject:
   - component: {fileID: 2648300133700382561}
   - component: {fileID: 3262003660044540023}
   - component: {fileID: 7326320022552401229}
+  - component: {fileID: 7005292434766134963}
   m_Layer: 0
   m_Name: Main Camera
   m_TagString: MainCamera
@@ -858,6 +859,20 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::camera
   cam_copy: {fileID: 7668671142553062651}
   camera_mode: 0
+--- !u!114 &7005292434766134963
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4348579618440816021}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 08ec8b8283465b740b4efd3e0a3dbd78, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::CameraRaycastMask
+  player: {fileID: 0}
+  maskRadius: 1.5
 --- !u!1 &4822136244423942449
 GameObject:
   m_ObjectHideFlags: 0
@@ -1142,6 +1157,7 @@ GameObject:
   - component: {fileID: 1705010706552677223}
   - component: {fileID: 8826153224195973153}
   - component: {fileID: 8213043395823375991}
+  - component: {fileID: 3012862554790261547}
   m_Layer: 0
   m_Name: Capsule
   m_TagString: Untagged
@@ -1292,3 +1308,16 @@ MonoBehaviour:
   jumpForce: 5
   maxJumpTime: 0.2
   cam: {fileID: 7326320022552401229}
+--- !u!114 &3012862554790261547
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 9036200024661167856}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e3213859a9e4cee4496916848bf7822d, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::PlayerPosAsigner
+  wallMaterial: {fileID: 2100000, guid: c7e94e70b5c29ba42a6b85f8f700fea4, type: 2}
