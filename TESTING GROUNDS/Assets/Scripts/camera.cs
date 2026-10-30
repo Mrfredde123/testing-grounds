@@ -8,7 +8,7 @@ public class camera : MonoBehaviour
     public int camera_mode = 0;
     float smoothness = 5f;
     Vector3 izo_pos = new Vector3(4.53000021f, 5.05000019f, -4.01999998f);
-    Vector3 side_pos = new Vector3(0, 0, 0);
+    Vector3 side_pos = new Vector3(0, 0, -5);
     Vector3 current_pos;
     Quaternion izo_rot = new Quaternion(0.239117652f, -0.369643807f, 0.0990457684f, 0.892399132f);
     Quaternion side_rot = Quaternion.identity;

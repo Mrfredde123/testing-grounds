@@ -55,6 +55,6 @@ Material:
     - _QueueOffset: 0
     - _Radius: 5
     m_Colors:
-    - _GlobalPlayerPosition: {r: -3.4328938, g: 1.5001001, b: -6.94769, a: 0}
+    - _GlobalPlayerPosition: {r: -3.3231287, g: 1.5001001, b: -4.0873, a: 0}
   m_BuildTextureStacks: []
   m_AllowLocking: 1
