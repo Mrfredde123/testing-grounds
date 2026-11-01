@@ -5,8 +5,10 @@ public class PlayerShoot : MonoBehaviour
 {
     public GameObject projectilePrefab;
     public Transform spawnPoint;
-
+    public bool hasSword = false;
     private InputAction shootAction;
+    public Sword sword;
+    public GameObject swordObject;
 
     void Awake()
     {
@@ -16,14 +18,25 @@ public class PlayerShoot : MonoBehaviour
 
     void Update()
     {
+        if (sword.isActiveAndEnabled)
+        {
+            hasSword = true;
+        }
         if (shootAction.WasPressedThisFrame())
         {
-            Shoot();
+            if (hasSword)
+            {
+                Shoot();
+                
+            }
+            
         }
     }
 
     void Shoot()
     {
+        hasSword = false;
+        swordObject.SetActive(false);
         // Создаем снаряд
         GameObject bullet = Instantiate(projectilePrefab, spawnPoint.position, Quaternion.identity);
 
@@ -31,10 +44,17 @@ public class PlayerShoot : MonoBehaviour
         Projectile projScript = bullet.GetComponent<Projectile>();
 
         // Передаем ему направление, куда смотрит SpawnPoint
+        // В файле PlayerShoot.cs, внутри метода Shoot()
         if (projScript != null)
         {
-            // spawnPoint.forward — это синяя ось (Z) объекта SpawnPoint
-            projScript.Setup(spawnPoint.forward);
+            // Передаем направление (spawnPoint.forward) И ссылку на игрока (transform)
+            projScript.Setup(spawnPoint.forward, transform);
         }
+    }
+    public void ReturnSword() 
+    {
+        hasSword = true;
+        swordObject.SetActive(true);
+
     }
 }

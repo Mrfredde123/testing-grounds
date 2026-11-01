@@ -413,8 +413,8 @@
     <Compile Include="Library\PackageCache\com.unity.collab-proxy@4628d2ba6ea4\Editor\Views\BranchExplorer\Virtualization\BrExConnectionRectangle.cs" />
     <Compile Include="Library\PackageCache\com.unity.collab-proxy@4628d2ba6ea4\Editor\Diff\AssetType.cs" />
     <Compile Include="Library\PackageCache\com.unity.collab-proxy@4628d2ba6ea4\Editor\Views\PendingChanges\FilesFilterPatternsMenuBuilder.cs" />
-    <Compile Include="Library\PackageCache\com.unity.collab-proxy@4628d2ba6ea4\Editor\Gluon\ShelvedChangesNotification.cs" />
     <Compile Include="Library\PackageCache\com.unity.collab-proxy@4628d2ba6ea4\Editor\CodeEditor\Utils\StringSegment.cs" />
+    <Compile Include="Library\PackageCache\com.unity.collab-proxy@4628d2ba6ea4\Editor\Gluon\ShelvedChangesNotification.cs" />
     <Compile Include="Library\PackageCache\com.unity.collab-proxy@4628d2ba6ea4\Editor\CodeEditor\Platform\KeyGesture.cs" />
     <Compile Include="Library\PackageCache\com.unity.collab-proxy@4628d2ba6ea4\Editor\Views\Diff\DiffTreeViewMenu.cs" />
     <Compile Include="Library\PackageCache\com.unity.collab-proxy@4628d2ba6ea4\Editor\Diff\Image\Toolbar\ImageModeSwitcherView.cs" />

@@ -1,7 +1,8 @@
 using UnityEngine;
-
+using UnityEngine.InputSystem;
 public class Projectile : MonoBehaviour
 {
+    public Transform player;
     public float speed = 30f;
     public float maxDistance = 50f;
     public LayerMask wallLayer;
@@ -14,25 +15,50 @@ public class Projectile : MonoBehaviour
     private float distanceTraveled = 0f;
     private bool isStuck = false;
     private Vector3 moveDirection;
+    private bool isReturning = false;
 
-    public void Setup(Vector3 direction)
+    // В файле Projectile.cs
+    public void Setup(Vector3 direction, Transform playerTransform)
     {
         moveDirection = direction.normalized;
+        player = playerTransform; // <--- Вот тут мы сохраняем игрока
 
         if (moveDirection != Vector3.zero)
         {
-            // Разворачиваем в сторону полета + применяем смещение для меча
             transform.rotation = Quaternion.LookRotation(moveDirection) * Quaternion.Euler(rotationOffset);
         }
     }
 
     void Update()
     {
-        if (isStuck) return;
-
+        if (isStuck && Keyboard.current.tKey.wasPressedThisFrame)
+        {
+            isReturning = true;
+            // (опционально) здесь можно отключить коллайдер меча, чтобы он не задевал стены на пути назад
+        }
+        if (isStuck && !isReturning) return;
+        
         float moveStep = speed * Time.deltaTime;
+        if (isReturning) 
+        {
+            Vector3 playerPosition = GameObject.FindGameObjectWithTag("Player").transform.position;
+            transform.position = Vector3.MoveTowards(transform.position, player.position, speed * Time.deltaTime);
+            if (Vector3.Distance(transform.position, player.position) < 1.0f)
+            {
+                // 1. Достаем скрипт игрока
+                PlayerShoot playerScript = player.GetComponent<PlayerShoot>();
 
-        if (Physics.Raycast(transform.position, moveDirection, out RaycastHit hit, moveStep + 0.1f, wallLayer))
+                // 2. Если скрипт найден — вызываем возврат
+                if (playerScript != null)
+                {
+                    playerScript.ReturnSword();
+                }
+
+                // 3. И ТОЛЬКО ПОСЛЕ ЭТОГО уничтожаем меч на сцене
+                Destroy(gameObject);
+            }
+        }
+        else if (Physics.Raycast(transform.position, moveDirection, out RaycastHit hit, moveStep + 0.1f, wallLayer))
         {
             // Ставим в точку удара с небольшим отступом
             transform.position = hit.point - (moveDirection * wallOffset);

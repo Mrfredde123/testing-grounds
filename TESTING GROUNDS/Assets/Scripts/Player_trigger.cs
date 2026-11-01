@@ -4,7 +4,13 @@ public class TriggerExample : MonoBehaviour
 {
     // Перетащите сюда объект "sword" из иерархии
     public GameObject swordObject;
+    public GameObject shoot;
 
+
+    void Update()
+    {
+            
+    }
     void OnTriggerEnter(Collider other)
     {
         Debug.Log("Игрок вошел в зону: " + other.name);
@@ -15,12 +21,16 @@ public class TriggerExample : MonoBehaviour
         {
             if (swordObject != null)
             {
+                
                 swordObject.SetActive(true); // Включаем меч
                 Debug.Log("Меч получен!");
 
                 // (Опционально) Уничтожаем зону, чтобы меч нельзя было взять дважды
-                // Destroy(other.gameObject); 
+                Destroy(other.gameObject); 
+
             }
         }
+        
+
     }
 }
