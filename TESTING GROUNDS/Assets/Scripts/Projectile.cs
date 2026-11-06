@@ -12,38 +12,85 @@ public class Projectile : MonoBehaviour
     public Vector3 rotationOffset = new Vector3(0f, 0f, 0f);
     public float wallOffset = 0.1f; // Отступ от стены
 
+    [Header("Леска")]
+
+    public float sagAmount = 0.4f;   // насколько провисает, в метрах
+    public int leashSegments = 16;   // чем больше, тем плавнее
+    public LineRenderer leash;
+    public Transform leashAnchor;       // пустышка на рукояти меча
+    public float maxLeashDistance = 12f;
+
+
     private float distanceTraveled = 0f;
     private bool isStuck = false;
     private Vector3 moveDirection;
     private bool isReturning = false;
 
     // В файле Projectile.cs
-    public void Setup(Vector3 direction, Transform playerTransform)
+
+
+
+    public Transform handPoint;   // новое поле
+
+    void Awake()
+    {
+        // Если в инспекторе пусто, ищем компоненты автоматически
+        if (leash == null) leash = GetComponent<LineRenderer>();
+
+        if (leashAnchor == null)
+        {
+            // Ищем дочерний объект с именем Anchor
+            Transform foundAnchor = transform.Find("Anchor");
+            if (foundAnchor != null) leashAnchor = foundAnchor;
+        }
+    }
+    public void Setup(Vector3 direction, Transform playerTransform, Transform spawn)
     {
         moveDirection = direction.normalized;
-        player = playerTransform; // <--- Вот тут мы сохраняем игрока
+        player = playerTransform;
+        handPoint = spawn;              // <-- сохраняем руку
 
         if (moveDirection != Vector3.zero)
-        {
             transform.rotation = Quaternion.LookRotation(moveDirection) * Quaternion.Euler(rotationOffset);
-        }
+    }
+    void UpdateLeash()
+    {
+        if (leash == null) return;
+
+        Transform from = handPoint != null ? handPoint : player;
+        if (from == null) return;
+
+        Vector3 start = from.position;
+        Vector3 end = leashAnchor != null ? leashAnchor.position : transform.position;
+
+        leash.positionCount = 2;
+        leash.SetPosition(0, start);
+        leash.SetPosition(1, end);
     }
 
     void Update()
     {
+        if (player == null) return;
         if (isStuck && Keyboard.current.tKey.wasPressedThisFrame)
         {
             isReturning = true;
             // (опционально) здесь можно отключить коллайдер меча, чтобы он не задевал стены на пути назад
         }
+
+        UpdateLeash();
+
+        if (player != null && Vector3.Distance(transform.position, player.position) > maxLeashDistance)
+            isReturning = true;
+
         if (isStuck && !isReturning) return;
-        
+
         float moveStep = speed * Time.deltaTime;
-        if (isReturning) 
+        if (isReturning)
         {
-            Vector3 playerPosition = GameObject.FindGameObjectWithTag("Player").transform.position;
-            transform.position = Vector3.MoveTowards(transform.position, player.position, speed * Time.deltaTime);
-            if (Vector3.Distance(transform.position, player.position) < 1.0f)
+            // Берем руку (handPoint), а если её нет — игрока (player)
+            Transform target = handPoint != null ? handPoint : player;
+            transform.position = Vector3.MoveTowards(transform.position, target.position, speed * Time.deltaTime);
+            if (Vector3.Distance(transform.position, target.position) < 0.5f)
             {
                 // 1. Достаем скрипт игрока
                 PlayerShoot playerScript = player.GetComponent<PlayerShoot>();
@@ -79,7 +126,7 @@ public class Projectile : MonoBehaviour
 
             if (distanceTraveled >= maxDistance)
             {
-                Destroy(gameObject);
+                isReturning = true;
             }
         }
     }

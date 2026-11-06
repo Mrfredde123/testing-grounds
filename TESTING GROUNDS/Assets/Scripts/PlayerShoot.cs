@@ -3,6 +3,7 @@ using UnityEngine.InputSystem;
 
 public class PlayerShoot : MonoBehaviour
 {
+
     public GameObject projectilePrefab;
     public Transform spawnPoint;
     public bool hasSword = false;
@@ -27,9 +28,9 @@ public class PlayerShoot : MonoBehaviour
             if (hasSword)
             {
                 Shoot();
-                
+
             }
-            
+
         }
     }
 
@@ -48,10 +49,11 @@ public class PlayerShoot : MonoBehaviour
         if (projScript != null)
         {
             // Передаем направление (spawnPoint.forward) И ссылку на игрока (transform)
-            projScript.Setup(spawnPoint.forward, transform);
+            projScript.Setup(spawnPoint.forward, transform, spawnPoint);
+
         }
     }
-    public void ReturnSword() 
+    public void ReturnSword()
     {
         hasSword = true;
         swordObject.SetActive(true);
