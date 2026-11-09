@@ -3,6 +3,7 @@ using UnityEngine.InputSystem;
 public class Projectile : MonoBehaviour
 {
     public Transform player;
+
     public float speed = 30f;
     public float maxDistance = 50f;
     public LayerMask wallLayer;
@@ -34,6 +35,7 @@ public class Projectile : MonoBehaviour
 
     void Awake()
     {
+
         // Если в инспекторе пусто, ищем компоненты автоматически
         if (leash == null) leash = GetComponent<LineRenderer>();
 
@@ -66,6 +68,12 @@ public class Projectile : MonoBehaviour
         leash.positionCount = 2;
         leash.SetPosition(0, start);
         leash.SetPosition(1, end);
+        float dist = Vector3.Distance(start, end);
+        float percent = Mathf.InverseLerp(0f, maxLeashDistance, dist);
+        Color darkRed = new Color(0.4f, 0f, 0f, 1f); // Темно-красный
+        Color currentColor = Color.Lerp(Color.white, darkRed, percent);
+        leash.startColor = currentColor;
+        leash.endColor = currentColor;
     }
 
     void Update()

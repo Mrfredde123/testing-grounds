@@ -5,7 +5,7 @@ public class TriggerExample : MonoBehaviour
     // Перетащите сюда объект "sword" из иерархии
     public GameObject swordObject;
     public GameObject shoot;
-
+    public UI_Sword swordUI;
 
     void Update()
     {
@@ -14,6 +14,7 @@ public class TriggerExample : MonoBehaviour
     void OnTriggerEnter(Collider other)
     {
         Debug.Log("Игрок вошел в зону: " + other.name);
+        if (swordUI != null) swordUI.ShowSwordUI();
 
         // Проверяем ТЕГ ТОГО ОБЪЕКТА, в который мы вошли.
         // Например, если вы создали зону с тегом "SwordZone"
